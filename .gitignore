@@ -1,0 +1,13 @@
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor / temporary files
+*.swp
+*.tmp
+*.log
+
+# Local environment files (never commit secrets)
+.env
+.env.*
+!.env.example
