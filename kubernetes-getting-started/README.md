@@ -150,20 +150,26 @@ Save the images in the `screenshots/` folder before pushing, if your instructor 
 
 ## Step 5 — Push this project to your GitHub repository
 
-The repository is already connected to GitHub. Run these commands from the repository root, the folder containing both `images/` and `kubernetes-getting-started/`:
+Create an **empty repository** on GitHub first (for example, `kubernetes-getting-started`). Do not initialize it with a README if you plan to push this existing folder as-is.
+
+In VS Code, open this project folder, select **Terminal → New Terminal**, and run:
 
 ```powershell
+git init
 git add .
-git status
-git commit -m "Add Kubernetes getting started exercise"
-git push
+git commit -m "Complete Kubernetes Hello Pod exercise"
+git branch -M main
+git remote add origin https://github.com/YOUR-USERNAME/YOUR-REPOSITORY.git
+git push -u origin main
 ```
 
-For future exercises, add their folders under the repository root, then commit and push from that same root:
+Replace `YOUR-USERNAME` and `YOUR-REPOSITORY` with your actual GitHub username and repository name. If Git asks you to authenticate, finish the sign-in flow in your browser. If `origin` already exists, check it with `git remote -v` instead of adding it again.
+
+After making future changes, use:
 
 ```powershell
 git add .
-git commit -m "Add weekly exercise"
+git commit -m "Describe your changes"
 git push
 ```
 

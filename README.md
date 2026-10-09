@@ -1,12 +1,4 @@
-# DevOps Exercises
-
-Weekly hands-on DevOps exercises and their supporting images.
-
-## Exercise 1: Kubernetes Getting Started
-
-Start with the [Kubernetes exercise guide](kubernetes-getting-started/README.md).
-
-Images used by the guide are in the [`images/`](images/) folder and displayed in the exercise README.# Kubernetes Hands-On Exercise 1: Hello Pod
+# Kubernetes Hands-On Exercise 1: Hello Pod
 
 ## Business problem
 
@@ -84,7 +76,7 @@ minikube service hello-k8s
 
 The last command opens the Service in your default browser. You should see the **Welcome to nginx!** page.
 
-![Minikube Cluster](images/Minikube cluster.png)
+![Minikube Cluster](images/Minikube%20cluster.png)
 
 ### Option B: Apply the YAML files in this repository
 
@@ -139,7 +131,9 @@ Keep that terminal open, then visit <http://127.0.0.1:8080>.
 - **Service opens but page is unavailable:** verify the Pod is `Running`, check `kubectl get service hello-k8s`, then try the port-forward command above.
 - **Need to recreate the local cluster:** run `minikube delete` and then `minikube start --driver=docker`. This deletes the local Minikube cluster and its resources.
 
-![Nginx Pod Running](images/Nginx%20Pod%20Running.png)
+![Nginx Webpage](images/Nginx%20webpage.png)
+
+
 
 ## Step 4 — Save evidence for submission
 
@@ -166,7 +160,7 @@ git remote add origin https://github.com/YOUR-USERNAME/YOUR-REPOSITORY.git
 git push -u origin main
 ```
 
-![Nginx Webpage](images/Nginx%20webpage.png)
+![Nginx Pod Running](images/Nginx%20Pod%20Running.png)
 
 Replace `YOUR-USERNAME` and `YOUR-REPOSITORY` with your actual GitHub username and repository name. If Git asks you to authenticate, finish the sign-in flow in your browser. If `origin` already exists, check it with `git remote -v` instead of adding it again.
 
