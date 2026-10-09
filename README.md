@@ -1,5 +1,7 @@
 # Kubernetes Hands-On Exercise 1: Hello Pod
 
+Next: [Exercise 2 — Deploy a Flask App on Minikube](2-Minikube-Kubectl-Flask/README.md).
+
 ## Business problem
 
 Imagine you are a DevOps engineer at Zepto. The product team needs a lightweight storefront/status web page that can run in a portable environment and be managed by Kubernetes. For this exercise, use the official Nginx container image as the sample web application.
