@@ -1,12 +1,4 @@
-# DevOps Exercises
-
-Weekly hands-on DevOps exercises and their supporting images.
-
-## Exercise 1: Kubernetes Getting Started
-
-Start with the [Kubernetes exercise guide](kubernetes-getting-started/README.md).
-
-Images used by the guide are in the [`images/`](images/) folder and displayed in the exercise README.# Kubernetes Hands-On Exercise 1: Hello Pod
+# Kubernetes Hands-On Exercise 1: Hello Pod
 
 ## Business problem
 
@@ -25,13 +17,24 @@ Imagine you are a DevOps engineer at Zepto. The product team needs a lightweight
 ```text
 kubernetes-getting-started/
 ├── README.md
-├── .gitignore
 ├── k8s/
 │   ├── pod.yaml
 │   └── service.yaml
 └── screenshots/
     └── README.md
 ```
+
+The image files used in this guide are in the repository's top-level `images/` folder.
+
+## Images
+
+![kubectl installation](../images/kubectl%20installation.png)
+
+![Minikube cluster](../images/Minikube%20cluster.png)
+
+![Nginx Pod running](../images/Nginx%20Pod%20Running.png)
+
+![Nginx webpage](../images/Nginx%20webpage.png)
 
 ## Prerequisites (Windows + VS Code)
 
@@ -147,26 +150,20 @@ Save the images in the `screenshots/` folder before pushing, if your instructor 
 
 ## Step 5 — Push this project to your GitHub repository
 
-Create an **empty repository** on GitHub first (for example, `kubernetes-getting-started`). Do not initialize it with a README if you plan to push this existing folder as-is.
-
-In VS Code, open this project folder, select **Terminal → New Terminal**, and run:
+The repository is already connected to GitHub. Run these commands from the repository root, the folder containing both `images/` and `kubernetes-getting-started/`:
 
 ```powershell
-git init
 git add .
-git commit -m "Complete Kubernetes Hello Pod exercise"
-git branch -M main
-git remote add origin https://github.com/YOUR-USERNAME/YOUR-REPOSITORY.git
-git push -u origin main
+git status
+git commit -m "Add Kubernetes getting started exercise"
+git push
 ```
 
-Replace `YOUR-USERNAME` and `YOUR-REPOSITORY` with your actual GitHub username and repository name. If Git asks you to authenticate, finish the sign-in flow in your browser. If `origin` already exists, check it with `git remote -v` instead of adding it again.
-
-After making future changes, use:
+For future exercises, add their folders under the repository root, then commit and push from that same root:
 
 ```powershell
 git add .
-git commit -m "Describe your changes"
+git commit -m "Add weekly exercise"
 git push
 ```
 
