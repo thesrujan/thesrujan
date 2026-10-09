@@ -65,6 +65,8 @@ kubectl get nodes
 
 Wait until the Minikube node shows `Ready` before moving on.
 
+![kubectl Installation](images/kubectl installation.png)
+
 ## Step 2 — Deploy Nginx
 
 Choose **one** of the following approaches. Both create the same Pod and Service, so do not run both on top of each other.
@@ -81,6 +83,8 @@ minikube service hello-k8s
 ```
 
 The last command opens the Service in your default browser. You should see the **Welcome to nginx!** page.
+
+![Minikube Cluster](images/Minikube cluster.png)
 
 ### Option B: Apply the YAML files in this repository
 
@@ -135,6 +139,8 @@ Keep that terminal open, then visit <http://127.0.0.1:8080>.
 - **Service opens but page is unavailable:** verify the Pod is `Running`, check `kubectl get service hello-k8s`, then try the port-forward command above.
 - **Need to recreate the local cluster:** run `minikube delete` and then `minikube start --driver=docker`. This deletes the local Minikube cluster and its resources.
 
+![Nginx Pod Running](images/Nginx%20Pod%20Running.png)
+
 ## Step 4 — Save evidence for submission
 
 Capture screenshots showing:
@@ -159,6 +165,8 @@ git branch -M main
 git remote add origin https://github.com/YOUR-USERNAME/YOUR-REPOSITORY.git
 git push -u origin main
 ```
+
+![Nginx Webpage](images/Nginx%20webpage.png)
 
 Replace `YOUR-USERNAME` and `YOUR-REPOSITORY` with your actual GitHub username and repository name. If Git asks you to authenticate, finish the sign-in flow in your browser. If `origin` already exists, check it with `git remote -v` instead of adding it again.
 
