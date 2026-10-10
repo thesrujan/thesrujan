@@ -157,35 +157,23 @@ Note: a `kubectl port-forward service/...` session forwards through a selected P
 
 ## Screenshots and evidence
 
-The following screenshots are included in this repository and linked below. They show the Minikube node becoming ready, the image build, creation of the ReplicaSet and Service, and scaling to five running Pods.
+The four screenshots below show the Minikube node becoming ready, the image build, ReplicaSet creation, and scaling to five running Pods. Two additional screenshots (automatic Pod replacement and the `/buy` endpoint) have not been captured yet.
 
 ### 1. Minikube node ready
 ![Minikube node ready](images/01-minikube-node-ready.png)
 
-Capture evidence: `kubectl get nodes` showing the node status as `Ready`. The included screenshot also shows the image build starting.
-
 ### 2. Flash-sale image build progress
 ![Flash-sale image build progress](images/02-flashsale-image-build-progress.png)
 
-Capture evidence: package installation during the `minikube image build` process.
-
 ### 3. Image built and ReplicaSet created
 ![Image built and ReplicaSet created](images/03-flashsale-image-built-replicaset-created.png)
-
-Capture evidence: successful image export, ReplicaSet and Service creation, and the subsequent scaling commands.
 
 ### 4. ReplicaSet scaled to five Pods
 ![ReplicaSet scaled to five Pods](images/04-replicaset-scaled-five-pods.png)
 
 Capture evidence: `kubectl get rs` showing five desired/current/ready replicas and `kubectl get pods -l app=flashsale -o wide` showing five running Pods.
 
-### 5. Pod recreated automatically — additional screenshot to add
-Save a screenshot as `images/05-pod-recreated-automatically.png` after deleting one of the five Pods and confirming Kubernetes restores the count to five.
-
-### 6. Flash-sale buy endpoint — additional screenshot to add
-Save a screenshot as `images/06-flashsale-buy-endpoint.png` showing a successful response from `/buy?user=123`, including the `served_by_pod` field.
-
-Only use screenshots captured from your own execution. After adding the final two screenshots, commit the new files so GitHub can display them here.
+Capture your own results for the Pod replacement and `/buy` endpoint, and save them using the filenames listed in [images/README.md](images/README.md).
 
 ## Questions and answers
 
