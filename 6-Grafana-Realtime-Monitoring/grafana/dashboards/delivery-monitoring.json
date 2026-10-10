@@ -1,0 +1,24 @@
+{
+  "annotations": {"list": []},
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": null,
+  "links": [],
+  "panels": [
+    {"datasource":{"type":"prometheus","uid":"Prometheus"},"fieldConfig":{"defaults":{"color":{"mode":"palette-classic"},"decimals":0,"unit":"short"},"overrides":[]},"gridPos":{"h":8,"w":12,"x":0,"y":0},"id":1,"options":{"legend":{"displayMode":"list","placement":"bottom","showLegend":true},"tooltip":{"mode":"single","sort":"none"}},"targets":[{"editorMode":"code","expr":"total_deliveries","legendFormat":"Total deliveries","refId":"A"}],"title":"Total Deliveries","type":"timeseries"},
+    {"datasource":{"type":"prometheus","uid":"Prometheus"},"fieldConfig":{"defaults":{"color":{"mode":"palette-classic"},"decimals":0,"unit":"short"},"overrides":[]},"gridPos":{"h":8,"w":12,"x":12,"y":0},"id":2,"options":{"legend":{"displayMode":"list","placement":"bottom","showLegend":true},"tooltip":{"mode":"single","sort":"none"}},"targets":[{"editorMode":"code","expr":"pending_deliveries","legendFormat":"Pending deliveries","refId":"A"}],"title":"Pending Deliveries","type":"timeseries"},
+    {"datasource":{"type":"prometheus","uid":"Prometheus"},"fieldConfig":{"defaults":{"color":{"mode":"palette-classic"},"decimals":0,"unit":"short"},"overrides":[]},"gridPos":{"h":8,"w":12,"x":0,"y":8},"id":3,"options":{"legend":{"displayMode":"list","placement":"bottom","showLegend":true},"tooltip":{"mode":"single","sort":"none"}},"targets":[{"editorMode":"code","expr":"on_the_way_deliveries","legendFormat":"On-the-way deliveries","refId":"A"}],"title":"On-the-Way Deliveries","type":"timeseries"},
+    {"datasource":{"type":"prometheus","uid":"Prometheus"},"fieldConfig":{"defaults":{"color":{"mode":"palette-classic"},"decimals":2,"unit":"s"},"overrides":[]},"gridPos":{"h":8,"w":12,"x":12,"y":8},"id":4,"options":{"legend":{"displayMode":"list","placement":"bottom","showLegend":true},"tooltip":{"mode":"single","sort":"none"}},"targets":[{"editorMode":"code","expr":"rate(average_delivery_time_sum[1m]) / rate(average_delivery_time_count[1m])","legendFormat":"Average delivery time","refId":"A"}],"title":"Average Delivery Time","type":"timeseries"}
+  ],
+  "refresh": "5s",
+  "schemaVersion": 41,
+  "tags": ["quick-commerce", "deliveries", "prometheus"],
+  "templating": {"list": []},
+  "time": {"from": "now-15m", "to": "now"},
+  "timepicker": {},
+  "timezone": "browser",
+  "title": "Quick Commerce Delivery Monitoring",
+  "uid": "quick-commerce-delivery",
+  "version": 1
+}

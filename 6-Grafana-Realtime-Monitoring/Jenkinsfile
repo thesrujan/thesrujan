@@ -1,0 +1,31 @@
+pipeline {
+    agent any
+    stages {
+        stage('Pre-check') {
+            steps {
+                sh 'python3 --version'
+                sh 'docker --version'
+            }
+        }
+        stage('Validate Python') {
+            steps {
+                sh 'python3 -m py_compile delivery_metrics.py'
+            }
+        }
+        stage('Build Delivery Metrics Image') {
+            steps {
+                sh 'docker build -t delivery-metrics:${BUILD_NUMBER} .'
+            }
+        }
+        stage('Validate Prometheus Configuration') {
+            steps {
+                sh 'docker run --rm -v "$PWD/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro" -v "$PWD/prometheus/alert_rules.yml:/etc/prometheus/alert_rules.yml:ro" prom/prometheus:v3.5.0 promtool check config /etc/prometheus/prometheus.yml'
+            }
+        }
+    }
+    post {
+        always {
+            echo 'Delivery monitoring pipeline finished. Review stage logs for details.'
+        }
+    }
+}
