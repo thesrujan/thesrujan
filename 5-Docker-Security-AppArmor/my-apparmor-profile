@@ -1,0 +1,35 @@
+#include <tunables/global>
+
+profile my-apparmor-profile flags=(attach_disconnected,mediate_deleted) {
+  #include <abstractions/base>
+
+  # Allow the Flask process to use TCP sockets and run its Python interpreter.
+  network inet stream,
+  network inet6 stream,
+  /usr/local/bin/python3.11 rix,
+  /usr/local/bin/python rix,
+  /usr/local/lib/python3.11/** r,
+  /usr/local/lib/python3.11/** mr,
+  /usr/lib/** r,
+  /lib/** r,
+  /lib64/** r,
+  /etc/ld.so.cache r,
+  /etc/ssl/** r,
+  /etc/hosts r,
+  /etc/hostname r,
+  /etc/resolv.conf r,
+  /dev/null rw,
+  /dev/urandom r,
+  /dev/random r,
+  /proc/** r,
+  /sys/** r,
+  /tmp/** rw,
+  /app/** r,
+  /usr/bin/cat rix,
+
+  # Demonstration restrictions: deny sensitive reads and shell execution.
+  deny /etc/passwd r,
+  deny /etc/shadow r,
+  deny /bin/bash x,
+  deny capability sys_admin,
+}
