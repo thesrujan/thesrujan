@@ -123,21 +123,21 @@ The following screenshots have been added from the results you supplied:
 ### 2. Flask image built
 ![Flask image built](images/02-flask-image-built.png)
 
+### 3. AppArmor profile loaded
+![AppArmor profile loaded](images/apparmor-profile-loaded.png)
+
 ### 5. Docker SDK profile verification
-![Docker SDK profile verification](images/05-docker-sdk-profile-verification.png)
+![Docker SDK profile verification](images/docker-sdk-profile-verification..png)
 
 ### 6. Restricted actions test
-![Restricted actions test](images/06-restricted-actions-test.png)
+![Restricted actions test](images/test_restricted_actions.png)
 
-The other screenshot slots still need genuine output captured from your own environment:
+The status and running-container screenshot slots still need genuine output captured from your own environment:
 
 1. **`01-apparmor-status.png`** — capture `sudo aa-status` and `docker info` showing AppArmor support.
-2. **`03-apparmor-profile-loaded.png`** — capture the real Ubuntu terminal after `sudo aa-status | grep -F my-apparmor-profile` confirms the profile is loaded.
-3. **`04-secure-flask-container-running.png`** — capture `docker ps` and the container security options showing the custom profile is applied.
+2. **`04-secure-flask-container-running.png`** — capture `docker ps` and the container security options showing the custom profile is applied.
 
 Save those files in `images/` using the exact names above. A generated/reference terminal image is not a substitute for genuine execution evidence. Note: the supplied restricted-actions screenshot shows the attempted read and shell execution succeeded (exit code 0), so it does not demonstrate that those actions were blocked. Review the profile and re-run the test before claiming successful restriction.
-
-Image links will display on GitHub after the image files are committed. Use actual screenshots captured from your own machine; do not present reference images as execution proof.
 
 ## Questions and answers
 
