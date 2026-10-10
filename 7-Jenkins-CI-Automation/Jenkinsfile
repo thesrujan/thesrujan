@@ -1,0 +1,35 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Build') {
+            steps {
+                sh 'echo "Starting CI build..."'
+                sh 'echo "Checking pipeline workspace..."'
+                sh 'pwd'
+            }
+        }
+
+        stage('Test') {
+            steps {
+                sh 'echo "Running sample CI checks..."'
+                sh 'test -f README.md || true'
+            }
+        }
+
+        stage('Package') {
+            steps {
+                sh 'echo "Packaging stage completed for the demo pipeline."'
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'CI pipeline completed successfully.'
+        }
+        failure {
+            echo 'CI pipeline failed. Check the console output.'
+        }
+    }
+}
