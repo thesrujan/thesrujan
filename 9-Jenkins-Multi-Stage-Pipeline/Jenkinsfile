@@ -1,3 +1,4 @@
+
 pipeline {
     agent any
 
@@ -15,7 +16,8 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                echo 'Creating a Python virtual environment and installing dependencies.'
+                echo 'Creating Python virtual environment and installing dependencies.'
+
                 dir('9-Jenkins-Multi-Stage-Pipeline') {
                     sh '''
                         set -eu
@@ -32,6 +34,7 @@ pipeline {
         stage('Test') {
             steps {
                 echo 'Running unit tests.'
+
                 dir('9-Jenkins-Multi-Stage-Pipeline') {
                     sh '''
                         set -eu
@@ -44,6 +47,7 @@ pipeline {
         stage('Deploy') {
             steps {
                 echo 'Copying the application to the mock deployment directory.'
+
                 dir('9-Jenkins-Multi-Stage-Pipeline') {
                     sh '''
                         set -eu
@@ -53,6 +57,7 @@ pipeline {
                                 kill "$old_pid" 2>/dev/null || true
                             fi
                         fi
+
                         rm -rf "$DEPLOY_DIR"
                         mkdir -p "$DEPLOY_DIR"
                         cp app.py requirements.txt "$DEPLOY_DIR/"
@@ -65,12 +70,15 @@ pipeline {
 
         stage('Run Application') {
             steps {
-                echo 'Starting the Flask app in the Jenkins agent for verification.'
+                echo 'Starting the Flask application.'
+
                 sh '''
                     set -eu
                     cd "$DEPLOY_DIR"
+
                     APP_PORT="$APP_PORT" nohup "$VENV_DIR/bin/python" app.py > app.log 2>&1 &
                     echo $! > app.pid
+
                     for attempt in $(seq 1 20); do
                         if "$VENV_DIR/bin/python" -c 'import urllib.request; urllib.request.urlopen("http://127.0.0.1:18080/health", timeout=2).read()' 2>/dev/null; then
                             echo "Flask application is responding on port $APP_PORT"
@@ -78,8 +86,9 @@ pipeline {
                         fi
                         sleep 1
                     done
+
                     cat app.log
-                    echo 'Flask application did not become ready.'
+                    echo "Flask application did not become ready."
                     exit 1
                 '''
             }
@@ -87,7 +96,8 @@ pipeline {
 
         stage('Test Application') {
             steps {
-                echo 'Checking the deployed app over HTTP.'
+                echo 'Checking the application over HTTP.'
+
                 sh '''
                     set -eu
                     "$VENV_DIR/bin/python" - <<'PY'
@@ -99,6 +109,7 @@ with urllib.request.urlopen(url, timeout=5) as response:
     print(message)
     assert response.status == 200
     assert message == "Hello, Jenkins Multi-Stage Pipeline!"
+
 print("Deployed application verification passed.")
 PY
                 '''
