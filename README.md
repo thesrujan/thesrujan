@@ -19,7 +19,7 @@ Imagine you are a DevOps engineer at Zepto. The product team needs a lightweight
 ## Project structure
 
 ```text
-kubernetes-getting-started/
+1-Kubernetes-Getting-Started/
 ├── README.md
 ├── .gitignore
 ├── k8s/
@@ -151,7 +151,7 @@ Save the images in the `screenshots/` folder before pushing, if your instructor 
 
 ## Step 5 — Push this project to your GitHub repository
 
-Create an **empty repository** on GitHub first (for example, `kubernetes-getting-started`). Do not initialize it with a README if you plan to push this existing folder as-is.
+Create an **empty repository** on GitHub first (for example, `1-Kubernetes-Getting-Started`). Do not initialize it with a README if you plan to push this existing folder as-is.
 
 In VS Code, open this project folder, select **Terminal → New Terminal**, and run:
 
