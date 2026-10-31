@@ -1,0 +1,27 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: prometheus-alert-rules
+  namespace: quick-commerce
+data:
+  alert_rules.yml: |
+    groups:
+      - name: quick-commerce-alerts
+        rules:
+          - alert: ProductApiHighMemoryUsage
+            expr: process_resident_memory_bytes{job="quick-commerce-api"} > 70 * 1024 * 1024
+            for: 30s
+            labels:
+              severity: warning
+            annotations:
+              summary: "Product API Pod memory usage is high"
+              description: "Pod {{ $labels.pod }} has process RSS above 70 MiB for 30 seconds. The container memory limit is 192 MiB; this early-warning threshold leaves time to investigate before the limit is reached."
+
+          - alert: ProductApiReplicasBelowThree
+            expr: sum(up{job="quick-commerce-api"} == 1) < 3
+            for: 30s
+            labels:
+              severity: critical
+            annotations:
+              summary: "Fewer than three Product API replicas are being scraped"
+              description: "Prometheus currently sees fewer than three healthy Product API scrape targets. Check Deployment replicas, Pod readiness and Service endpoints."
