@@ -1,0 +1,126 @@
+pipeline {
+    agent any
+
+    options {
+        timestamps()
+        disableConcurrentBuilds()
+    }
+
+    parameters {
+        booleanParam(
+            name: 'INJECT_TEST_FAILURE',
+            defaultValue: false,
+            description: 'Enable this only to demonstrate that a failing test marks the Jenkins build as failed.'
+        )
+    }
+
+    environment {
+        PIP_DISABLE_PIP_VERSION_CHECK = '1'
+        PYTHONDONTWRITEBYTECODE = '1'
+    }
+
+    stages {
+        stage('1. Source Checkout') {
+            steps {
+                checkout scm
+                dir('11-Jenkins-Metrics-Exporter') {
+                    echo 'Source code checked out from the configured Git repository.'
+                    script {
+                        if (isUnix()) {
+                            sh 'git rev-parse --short HEAD'
+                        } else {
+                            bat 'git rev-parse --short HEAD'
+                        }
+                    }
+                }
+            }
+        }
+
+        stage('2. Dependency Installation and Build') {
+            steps {
+                dir('11-Jenkins-Metrics-Exporter') {
+                    script {
+                        if (isUnix()) {
+                            sh 'python3 --version'
+                            sh 'python3 -m venv .venv'
+                            sh '.venv/bin/python -m pip install --upgrade pip'
+                            sh '.venv/bin/python -m pip install -r requirements.txt'
+                            sh '.venv/bin/python -m compileall -q metrics_exporter.py scripts tests'
+                        } else {
+                            bat 'python --version'
+                            bat 'python -m venv .venv'
+                            bat '.venv\\Scripts\\python.exe -m pip install --upgrade pip'
+                            bat '.venv\\Scripts\\python.exe -m pip install -r requirements.txt'
+                            bat '.venv\\Scripts\\python.exe -m compileall -q metrics_exporter.py scripts tests'
+                        }
+                    }
+                }
+            }
+        }
+
+        stage('3. Automated Testing and Validation') {
+            steps {
+                dir('11-Jenkins-Metrics-Exporter') {
+                    script {
+                        withEnv(["INJECT_TEST_FAILURE=${params.INJECT_TEST_FAILURE}"]) {
+                            if (isUnix()) {
+                                sh '.venv/bin/python -m pytest -q --junitxml=junit.xml'
+                            } else {
+                                bat '.venv\\Scripts\\python.exe -m pytest -q --junitxml=junit.xml'
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        stage('4. Deployment Packaging') {
+            steps {
+                dir('11-Jenkins-Metrics-Exporter') {
+                    script {
+                        if (isUnix()) {
+                            sh '.venv/bin/python scripts/package.py --output deployment'
+                        } else {
+                            bat '.venv\\Scripts\\python.exe scripts\\package.py --output deployment'
+                        }
+                    }
+                    archiveArtifacts artifacts: 'deployment/**', fingerprint: true
+                }
+            }
+        }
+
+        stage('5. Build Verification') {
+            steps {
+                dir('11-Jenkins-Metrics-Exporter') {
+                    script {
+                        if (isUnix()) {
+                            sh 'test -f deployment/metrics-exporter/metrics_exporter.py && test -f deployment/metrics-exporter.zip'
+                            sh 'find deployment -maxdepth 3 -type f -print'
+                        } else {
+                            bat 'if not exist deployment\\metrics-exporter\\metrics_exporter.py exit /b 1'
+                            bat 'if not exist deployment\\metrics-exporter.zip exit /b 1'
+                            bat 'dir /s deployment'
+                        }
+                    }
+                    echo 'Deployment files verified successfully.'
+                }
+            }
+        }
+    }
+
+    post {
+        always {
+            dir('11-Jenkins-Metrics-Exporter') {
+                junit testResults: 'junit.xml', allowEmptyResults: true
+                archiveArtifacts artifacts: 'deployment/**', allowEmptyArchive: true, fingerprint: true
+            }
+        }
+        success {
+            echo 'PIPELINE RESULT: SUCCESS'
+        }
+        failure {
+            echo 'PIPELINE RESULT: FAILURE — inspect the failed stage and test report above.'
+        }
+    }
+}
+

@@ -1,0 +1,39 @@
+JENKINS METRICS EXPORTER — COMMANDS
+
+1) From the root of your existing GitHub repository clone, after extracting this folder:
+   git add 11-Jenkins-Metrics-Exporter
+   git commit -m "Add Jenkins Python metrics exporter pipeline"
+   git push origin main
+
+2) WINDOWS POWERSHELL (run inside 11-Jenkins-Metrics-Exporter):
+   python --version
+   python -m venv .venv
+   .\.venv\Scripts\python.exe -m pip install --upgrade pip
+   .\.venv\Scripts\python.exe -m pip install -r requirements.txt
+   .\.venv\Scripts\python.exe -m pytest -q
+   .\.venv\Scripts\python.exe scripts\package.py --output deployment
+   $env:PORT = "8000"
+   python metrics_exporter.py
+
+3) LINUX (run inside 11-Jenkins-Metrics-Exporter):
+   python3 --version
+   python3 -m venv .venv
+   .venv/bin/python -m pip install --upgrade pip
+   .venv/bin/python -m pip install -r requirements.txt
+   .venv/bin/python -m pytest -q
+   .venv/bin/python scripts/package.py --output deployment
+   PORT=8000 .venv/bin/python metrics_exporter.py
+
+4) CONTROLLED FAILURE DEMO:
+   Windows PowerShell:
+     $env:INJECT_TEST_FAILURE = "true"
+     .\.venv\Scripts\python.exe -m pytest -q
+     Remove-Item Env:INJECT_TEST_FAILURE
+   Linux:
+     INJECT_TEST_FAILURE=true .venv/bin/python -m pytest -q
+
+5) JENKINS JOB CONFIGURATION:
+   Repository URL: https://github.com/thesrujan/thesrujan.git
+   Branch: */main
+   Script Path: 11-Jenkins-Metrics-Exporter/Jenkinsfile
+   Build with Parameters: INJECT_TEST_FAILURE unchecked for success; checked for controlled failure.
